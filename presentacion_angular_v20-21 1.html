@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angular 20/21 - De Cero a Pro</title>
+<style>
+/* Theme Variables */
+:root {
+  --font-family-display: Arial, sans-serif;
+  --font-weight-display: 600;
+  --font-family-content: Arial, sans-serif;
+  --font-weight-content: 400;
+  --font-size-content: 16px;
+  --line-height-content: 1.4;
+}
+
+/* DARK THEME (DEFAULT) */
+body.theme-dark {
+  --color-bg-base: #0f172a;
+  --color-bg-elevated: #020617;
+  --color-bg-surface: #1e293b;
+  --color-bg-muted: #334155;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-accent: #38bdf8;
+  --color-primary: #38bdf8;
+  --color-primary-foreground: #0f172a;
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-content);
+  font-weight: var(--font-weight-content);
+  font-size: var(--font-size-content);
+  line-height: var(--font-height-content);
+  overflow-x: hidden;
+}
+
+/* Slide Container */
+.slide {
+  width: 960px;
+  height: 540px;
+  margin: 0 auto 20px;
+  display: flex;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Layout Utilities */
+.row { display: flex; flex-direction: row; }
+.col { display: flex; flex-direction: column; }
+.center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.space-between { justify-content: space-between; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.fill-width { flex: 1; }
+.fill-height { flex: 1; display: flex; flex-direction: column; }
+
+/* Spacing */
+.gap-sm { gap: 0.5rem; }
+.gap-md { gap: 1rem; }
+.gap-lg { gap: 1.5rem; }
+.gap-xl { gap: 2rem; }
+.gap-2xl { gap: 3rem; }
+
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+.p-12 { padding: 3rem; }
+.p-16 { padding: 4rem; }
+
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mb-12 { margin-bottom: 3rem; }
+
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
+.mt-12 { margin-top: 3rem; }
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-display);
+  line-height: 1.2;
+  margin: 0;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.25rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+.text-6xl { font-size: 3.75rem; }
+.text-5xl { font-size: 3rem; }
+.text-4xl { font-size: 2.25rem; }
+.text-3xl { font-size: 1.875rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-xl { font-size: 1.25rem; }
+.text-lg { font-size: 1.125rem; }
+.text-base { font-size: 1rem; }
+.text-sm { font-size: 0.875rem; }
+.text-xs { font-size: 0.75rem; }
+
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.font-medium { font-weight: 500; }
+.font-normal { font-weight: 400; }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.opacity-90 { opacity: 0.9; }
+.opacity-80 { opacity: 0.8; }
+.opacity-70 { opacity: 0.7; }
+.opacity-60 { opacity: 0.6; }
+
+/* Lists */
+ul, ol {
+  margin-left: 2rem;
+  line-height: 1.8;
+}
+
+ul li { list-style: disc; }
+ol li { list-style: decimal; }
+
+li { margin-bottom: 0.75rem; }
+li:last-child { margin-bottom: 0; }
+
+/* Code Blocks */
+pre {
+  background-color: #1e293b;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+code {
+  font-family: 'Courier New', monospace;
+  background-color: #1e293b;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+}
+
+/* Card Styles */
+.card-rect {
+  padding: 2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+</style>
+</head>
+<body class="theme-dark">
+
+<!-- SLIDE 1: PORTADA -->
+<section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+  <h1 class="text-6xl mb-4" style="color: #38bdf8;">Angular 20/21</h1>
+  <p style="font-style: italic;">Autor: Roberto Cano Estévez</p>
+
+  <p class="text-sm mt-8" style="color: #94a3b8;">Marzo 2026 • Versiones 20 y 21</p>
+</section>
+
+<!-- SLIDE 2: AGENDA -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">📋 Agenda del Día (5 horas)</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li><strong style="color: #38bdf8;">Bloque 1 (2h30):</strong> ¿Qué es Angular? • Componentes • Data Binding • Signals • Control Flow • Pipes</li>
+    <li><strong style="color: #94a3b8;">Descanso (1h):</strong></li>
+    <li><strong style="color: #38bdf8;">Bloque 2 (2h30):</strong> Routing • HTTP Client • Servicios • Formularios • Proyecto real</li>
+  </ul>
+</section>
+
+<!-- SLIDE 3: ¿QUÉ ES ANGULAR HOY? -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-3" style="color: #38bdf8;">¿Qué es Angular en 2026?</h2>
+  <p class="text-base mb-4" style="color: #94a3b8; font-style: italic;">Imagina que quieres construir Gmail o Spotify desde cero. Angular es el kit completo: no sólo ladrillos, sino también el plano, las herramientas y el manual.</p>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li><strong>Framework completo</strong> — no necesitas buscar librerías para cada cosa</li>
+    <li><strong>TypeScript</strong> — JavaScript con tipos: detecta errores antes de ejecutar</li>
+    <li><strong>Componentes standalone</strong> — piezas de la app autosuficientes y reutilizables</li>
+    <li><strong>Signals</strong> — reactividad inteligente: la pantalla se actualiza sola cuando cambian los datos</li>
+  </ul>
+</section>
+
+<!-- SLIDE 4: EVOLUCIÓN ANGULAR -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-3" style="color: #38bdf8;">Angular: La Evolución</h2>
+  <p class="text-base mb-4" style="color: #94a3b8;">Si has oído que Angular es "muy complicado", eso era antes. La versión moderna es radicalmente más simple.</p>
+  <div class="row gap-lg">
+    <div class="fill-width" style="background-color: #1e293b; padding: 1.5rem;">
+      <h3 class="mb-2" style="color: #f87171;">❌ Angular Antiguo (v2-v14)</h3>
+      <p style="color: #cbd5e1;">NgModules (“contenedores burocráticos” obligatorios), Zone.js (libreria extra), mucho código repetitivo para cosas simples</p>
+    </div>
+    <div class="fill-width" style="background-color: #1e293b; padding: 1.5rem;">
+      <h3 class="mb-2" style="color: #4ade80;">✅ Angular 20/21 (hoy)</h3>
+      <p style="color: #cbd5e1;">Standalone (componentes autosuficientes), Signals (reactividad simple), menos código, mucho más rendimiento</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: INSTALACIÓN -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Instalación Rápida</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"># Instalar Angular CLI</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">npm install -g <span style="color: #ffcb6b">@angular</span>/cli@<span style="color: #f78c6c">21</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"># Crear nuevo proyecto</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">ng new mi-app</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"># Iniciar servidor</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">cd mi-app</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">ng serve</p>
+</div>
+  <p class="text-base mt-4" style="color: #94a3b8;">Accede en: http://localhost:4200</p>
+</section>
+
+<!-- SLIDE 6: ESTRUCTURA PROYECTO -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">📁 Estructura del Proyecto</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace;">
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">mi-app/</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">├── src/</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">│   ├── app/</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">│   │   ├── app.component.ts</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">│   │   ├── app.config.ts</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">│   │   └── app.routes.ts</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">│   ├── index.html</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">│   └── main.ts</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">├── angular.json</p>
+    <p style="color: #cbd5e1;">└── package.json</p>
+  </div>
+</section>
+
+<!-- SLIDE 7: STANDALONE COMPONENTS INTRO -->
+<section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+  <h1 class="text-5xl mb-4" style="color: #38bdf8;">Componentes en Angular</h1>
+  <p class="text-2xl mb-4" style="color: #cbd5e1;">La unidad mínima de tu aplicación</p>
+  <p class="text-lg" style="color: #94a3b8;">Un componente = HTML + estilos CSS + lógica TypeScript empaquetados juntos.<br>Como una pieza de LEGO: autosuficiente, reutilizable y combinable con otras piezas.</p>
+</section>
+
+<!-- SLIDE 8: ANTES VS AHORA -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Antes vs Ahora: cómo se declara un componente</h2>
+  <p class="text-base mb-3" style="color: #94a3b8;">Antes había que registrar cada componente en un "módulo" intermediario (NgModule). Ahora el componente se gestiona solo.</p>
+  <div class="row gap-lg">
+    <div class="fill-width" style="background-color: #1e293b; padding: 1.5rem;">
+      <h3 class="mb-4" style="color: #f87171;">❌ Angular Antiguo</h3>
+      <div style="background-color: #0f172a; padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+        <p style="color: #cbd5e1; margin: 0;">@NgModule({</p>
+        <p style="color: #cbd5e1; margin: 0;">  declarations: [UserComponent],</p>
+        <p style="color: #cbd5e1; margin: 0;">  imports: [CommonModule],</p>
+        <p style="color: #cbd5e1; margin: 0;">})</p>
+        <p style="color: #cbd5e1; margin: 0;">export class UserModule {}</p>
+      </div>
+    </div>
+    <div class="fill-width" style="background-color: #1e293b; padding: 1.5rem;">
+      <h3 class="mb-4" style="color: #4ade80;">✅ Angular 20/21</h3>
+      <div style="background-color: #0f172a; padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+        <p style="color: #cbd5e1; margin: 0;">@Component({</p>
+        <p style="color: #cbd5e1; margin: 0;">  standalone: true,</p>
+        <p style="color: #cbd5e1; margin: 0;">  imports: [CommonModule],</p>
+        <p style="color: #cbd5e1; margin: 0;">  template: `&lt;h2&gt;User!&lt;/h2&gt;`</p>
+        <p style="color: #cbd5e1; margin: 0;">})</p>
+        <p style="color: #cbd5e1; margin: 0;">export class UserComponent {}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SLIDE 9: PRIMER COMPONENTE -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Tu Primer Componente Standalone</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 <strong>selector</strong>: el tag HTML que usarás en otros templates &nbsp;|  <strong>standalone: true</strong>: se gestiona solo &nbsp;|  <strong>template</strong>: el HTML que renderiza</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.8rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">Component</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;"><span style="color: #ffcb6b;">@Component</span>({</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">selector</span>: <span style="color: #c3e88d;">'app-saludo'</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">standalone</span>: <span style="color: #ff5370;">true</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">template</span>: <span style="color: #c3e88d;">`&lt;h1&gt;¡Hola {{ nombre }}!&lt;/h1&gt;`</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.75rem;">})</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">SaludoComponent</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">nombre</span> = <span style="color: #c3e88d;">'Angular 21'</span>;</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 10: CREAR COMPONENTE CLI -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Generar Componentes con CLI</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"># Crear componente standalone</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">ng generate component usuario</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"># Forma corta</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">ng g c producto</p>
+</div>
+  <p class="text-lg mt-6" style="color: #cbd5e1;">Por defecto en Angular 21, todos los componentes son standalone</p>
+</section>
+
+<!-- SLIDE 11: INTERPOLACIÓN -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Interpolación: mostrar datos en pantalla</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Las dobles llaves <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">{{ }}</code> son "huecos" en el HTML que Angular rellena con el valor actual de una variable del componente.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.85rem;">
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">ProductoComponent</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">titulo</span> = <span style="color: #c3e88d;">'MacBook Pro'</span>;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">precio</span> = <span style="color: #f78c6c;">1999</span>;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.75rem;">  <span style="color: #f78c6c;">disponible</span> = <span style="color: #ff5370;">true</span>;</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">}</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Template</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;<span style="color: #f07178;">h2</span>&gt;{{ titulo }}&lt;/<span style="color: #f07178;">h2</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;<span style="color: #f07178;">p</span>&gt;Precio: {{ precio }}€&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1;">&lt;<span style="color: #f07178;">p</span>&gt;Stock: {{ disponible ? 'Sí' : 'No' }}&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+  </div>
+</section>
+
+<!-- SLIDE 12: PROPERTY BINDING -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Property Binding: pasar datos al HTML</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Los corchetes <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">[propiedad]</code> le dicen a Angular: “evalua este valor como JavaScript y pásale al atributo del elemento”. Es un enlace de datos en <strong>una dirección</strong>: de la clase al HTML.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.85rem;">
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">ImagenComponent</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">imagenUrl</span> = <span style="color: #c3e88d;">'assets/logo.png'</span>;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">descripcion</span> = <span style="color: #c3e88d;">'Logo Angular'</span>;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.75rem;">  <span style="color: #f78c6c;">deshabilitado</span> = <span style="color: #ff5370;">false</span>;</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">}</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Template</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;<span style="color: #f07178;">img</span> [<span style="color: #c792ea;">src</span>]=<span style="color: #c3e88d;">"imagenUrl"</span> [<span style="color: #c792ea;">alt</span>]=<span style="color: #c3e88d;">"descripcion"</span>&gt;</p>
+    <p style="color: #cbd5e1;">&lt;<span style="color: #f07178;">button</span> [<span style="color: #c792ea;">disabled</span>]=<span style="color: #c3e88d;">"deshabilitado"</span>&gt;Click&lt;/<span style="color: #f07178;">button</span>&gt;</p>
+  </div>
+</section>
+
+<!-- SLIDE 13: EVENT BINDING -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Event Binding: reaccionar a acciones del usuario</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Los paréntesis <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">(evento)</code> capturan eventos del usuario (clic, tecla pulsada, ratón...) y ejecutan un método. Es un enlace en <strong>la otra dirección</strong>: del HTML a la clase.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.8rem;">
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">ContadorComponent</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  <span style="color: #f78c6c;">contador</span> = <span style="color: #f78c6c;">0</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #82aaff;">incrementar</span>() {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">contador</span>++;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.75rem;">  }</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">}</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Template</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;<span style="color: #f07178;">p</span>&gt;Contador: {{ contador }}&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1;">&lt;<span style="color: #f07178;">button</span> (<span style="color: #c792ea;">click</span>)=<span style="color: #c3e88d;">"incrementar()"</span>&gt;+1&lt;/<span style="color: #f07178;">button</span>&gt;</p>
+  </div>
+</section>
+
+<!-- SLIDE 14: TWO-WAY BINDING -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Two-Way Binding: sincronización automática</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">[(ngModel)]</code> es la combinación de <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">[ ]</code> y <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">( )</code>: cuando el usuario escribe en el input, la variable se actualiza; y cuando la variable cambia en código, el input también se actualiza. El dato fluye en <strong>ambas direcciones</strong>.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.8rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">FormsModule</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/forms'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #ffcb6b;">@Component</span>({</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">standalone</span>: <span style="color: #ff5370;">true</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">imports</span>: [<span style="color: #82aaff;">FormsModule</span>],</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.75rem;">  <span style="color: #f78c6c;">template</span>: <span style="color: #c3e88d;">`&lt;input [(ngModel)]="nombre"&gt;`</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">})</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">FormComponent</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">nombre</span> = <span style="color: #c3e88d;">''</span>;</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 11B: EJERCICIO DATA BINDING (después de aprender todos los tipos de binding) -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">💪 Ejercicio 1: Tarjeta de Perfil</h2>
+  <p class="text-base mb-2" style="color: #94a3b8; font-style: italic;">Pon en práctica los 4 tipos de binding aprendidos</p>
+  <ul class="text-base" style="color: #cbd5e1;">
+    <li>Nombre, edad y profesión con <strong>interpolación</strong>: <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">{{ }}</code></li>
+    <li>Avatar con <strong>property binding</strong>: <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">[src]</code></li>
+    <li>Botón que cambie estado "online/offline" (<strong>event binding</strong>: <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">(click)</code>)</li>
+    <li>Input de nombre editable con <strong>two-way binding</strong>: <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">[(ngModel)]</code></li>
+  </ul>
+  <p class="text-sm mt-4" style="color: #94a3b8;">⏱️ Tiempo: 8-10 minutos</p>
+</section>
+
+<!-- SLIDE 15: SIGNALS INTRO -->
+<section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+  <h1 class="text-5xl mb-4" style="color: #38bdf8;">Angular Signals</h1>
+  <p class="text-2xl mb-4" style="color: #cbd5e1;">Reactividad moderna: la pantalla se actualiza sola</p>
+  <p class="text-lg" style="color: #94a3b8;">Como una hoja de cálculo de Excel: cuando cambias una celda, todas las fórmulas que dependen de ella se recalculan automáticamente.</p>
+</section>
+
+<!-- SLIDE 16: QUÉ SON SIGNALS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-3" style="color: #38bdf8;">¿Qué son los Signals?</h2>
+  <p class="text-base mb-4" style="color: #94a3b8;">Una Signal es una variable “inteligente”: Angular sabe exactamente dónde se usa y, cuando su valor cambia, actualiza sólo esas partes de la pantalla — sin recargar nada más.</p>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Sistema de reactividad <strong>nativo</strong> de Angular (sin librerías externas)</li>
+    <li>Notifican automáticamente cuando cambian</li>
+    <li>Mejor rendimiento: sólo actualiza lo necesario</li>
+    <li>Más fácil de entender que los Observables de RxJS</li>
+  </ul>
+</section>
+
+<!-- SLIDE 17: CREAR SIGNAL -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Crear un Signal</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 A diferencia de una variable normal, lees una signal llamando a la función: <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">contador()</code> en lugar de sólo <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">contador</code>. Esa llamada registra la dependencia.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.85rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">Component</span>, <span style="color: #82aaff;">signal</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">ContadorComponent</span> {</p>
+    <p style="color: #6b7280; margin-bottom: 0.25rem;">  // Signal writable</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  <span style="color: #f78c6c;">contador</span> = <span style="color: #82aaff;">signal</span>(<span style="color: #f78c6c;">0</span>);</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #82aaff;">incrementar</span>() {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">contador</span>.<span style="color: #82aaff;">set</span>(<span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">contador</span>() + <span style="color: #f78c6c;">1</span>);</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 18: LEER Y ACTUALIZAR SIGNALS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Leer y Actualizar Signals</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.8rem;">
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Leer valor (se ejecuta como función)</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;"><span style="color: #c792ea;">const</span> <span style="color: #f78c6c;">valor</span> = <span style="color: #89ddff;">this</span>.<span style="color: #82aaff;">contador</span>();</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Actualizar valor</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;"><span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">contador</span>.<span style="color: #82aaff;">set</span>(<span style="color: #f78c6c;">10</span>);</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Actualizar basado en valor actual</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;"><span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">contador</span>.<span style="color: #82aaff;">update</span>(<span style="color: #f78c6c;">val</span> =&gt; <span style="color: #f78c6c;">val</span> + <span style="color: #f78c6c;">1</span>);</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// En template</p>
+    <p style="color: #cbd5e1;">&lt;<span style="color: #f07178;">p</span>&gt;Contador: {{ contador() }}&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+  </div>
+</section>
+
+<!-- SLIDE 19: COMPUTED SIGNALS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Computed Signals</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">computed</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">CarritoComponent</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">productos</span> = <span style="color: #82aaff;">signal</span>([</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    { <span style="color: #f78c6c;">nombre</span>: <span style="color: #c3e88d;">'Laptop'</span>, <span style="color: #f78c6c;">precio</span>: <span style="color: #f78c6c;">999</span> },</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    { <span style="color: #f78c6c;">nombre</span>: <span style="color: #c3e88d;">'Mouse'</span>, <span style="color: #f78c6c;">precio</span>: <span style="color: #f78c6c;">29</span> }</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  ]);</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">total</span> = <span style="color: #82aaff;">computed</span>(() =&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">productos</span>().<span style="color: #82aaff;">reduce</span>((<span style="color: #f78c6c;">sum</span>, <span style="color: #f78c6c;">p</span>) =&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      <span style="color: #f78c6c;">sum</span> + <span style="color: #f78c6c;">p</span>.<span style="color: #f78c6c;">precio</span>, <span style="color: #f78c6c;">0</span>)</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  );</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 20: EFFECT -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Effect: Reaccionar a Cambios</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.8rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">effect</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">LogComponent</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  <span style="color: #f78c6c;">contador</span> = <span style="color: #82aaff;">signal</span>(<span style="color: #f78c6c;">0</span>);</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #82aaff;">constructor</span>() {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #82aaff;">effect</span>(() =&gt; {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      <span style="color: #89ddff;">console</span>.<span style="color: #82aaff;">log</span>(<span style="color: #c3e88d;">'Contador cambió:'</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">        <span style="color: #89ddff;">this</span>.<span style="color: #82aaff;">contador</span>());</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    });</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 21: EJEMPLO COMPLETO SIGNALS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Ejemplo Completo con Signals</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.65rem;">
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #ffcb6b;">@Component</span>({</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">selector</span>: <span style="color: #c3e88d;">'app-tareas'</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">standalone</span>: <span style="color: #ff5370;">true</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">template</span>: <span style="color: #c3e88d;">`</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c3e88d;">    &lt;input #input (keyup.enter)="agregar(input.value)"&gt;</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c3e88d;">    &lt;p&gt;Total: {{ total() }}&lt;/p&gt;</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c3e88d;">    @for (tarea of tareas(); track tarea) {</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c3e88d;">      &lt;li&gt;{{ tarea }}&lt;/li&gt;</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.75rem;"><span style="color: #c3e88d;">    }`</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">})</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">TareasComponent</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">tareas</span> = <span style="color: #82aaff;">signal</span>&lt;<span style="color: #82aaff;">string</span>[]&gt;([]);</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  <span style="color: #f78c6c;">total</span> = <span style="color: #82aaff;">computed</span>(() =&gt; <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">tareas</span>().<span style="color: #f78c6c;">length</span>);</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #82aaff;">agregar</span>(<span style="color: #f78c6c;">tarea</span>: <span style="color: #82aaff;">string</span>) {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">tareas</span>.<span style="color: #82aaff;">update</span>(<span style="color: #f78c6c;">t</span> =&gt; [...<span style="color: #f78c6c;">t</span>, <span style="color: #f78c6c;">tarea</span>]);</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 21B: EJERCICIO SIGNALS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">💪 Ejercicio 2: Carrito de Compras</h2>
+  <p class="text-lg mb-4" style="color: #cbd5e1;">Crea un carrito con Signals:</p>
+  <ul class="text-base" style="color: #cbd5e1;">
+    <li>Signal para array de productos (nombre, precio)</li>
+    <li>Computed signal para total</li>
+    <li>Botón para agregar/eliminar productos</li>
+  </ul>
+  <p class="text-sm mt-6" style="color: #94a3b8;">⏱️ Tiempo: 8-10 minutos</p>
+</section>
+
+<!-- SLIDE 22: CONTROL FLOW MODERNO -->
+<section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+  <h1 class="text-5xl mb-4" style="color: #38bdf8;">Control Flow Moderno</h1>
+  <p class="text-2xl mb-4" style="color: #cbd5e1;">@if, @for, @switch</p>
+  <p class="text-lg" style="color: #94a3b8;">Controla qué partes del HTML se muestran u ocultan, y cómo se repiten los elementos — directamente dentro del template, con una sintaxis limpia similar a JavaScript.</p>
+</section>
+
+<!-- SLIDE 23: @IF -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">@if — Mostrar u ocultar según condición</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Reemplaza al antiguo <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">*ngIf</code>. La nueva sintaxis con <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">@if</code> es más natural (igual que un if de JavaScript) y <strong>no requiere importar ningún módulo</strong>.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.85rem;">
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Antes: *ngIf</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">&lt;<span style="color: #f07178;">div</span> <span style="color: #c792ea;">*ngIf</span>=<span style="color: #c3e88d;">"usuario"</span>&gt;Hola {{ usuario }}&lt;/<span style="color: #f07178;">div</span>&gt;</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Ahora: @if</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">@if</span> (usuario) {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  &lt;<span style="color: #f07178;">p</span>&gt;Hola {{ usuario }}&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">} <span style="color: #c792ea;">@else</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  &lt;<span style="color: #f07178;">p</span>&gt;No hay usuario&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 24: @FOR -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">@for — Repetir elementos para una lista</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Reemplaza el antiguo <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">*ngFor</code>. El <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">track</code> es obligatorio: indica a Angular cómo identificar cada elemento para actualizar sólo los que cambian (optimización de rendimiento).</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.85rem;">
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Antes: *ngFor</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">&lt;<span style="color: #f07178;">li</span> <span style="color: #c792ea;">*ngFor</span>=<span style="color: #c3e88d;">"let item of items"</span>&gt;{{ item }}&lt;/<span style="color: #f07178;">li</span>&gt;</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Ahora: @for con track</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">@for</span> (<span style="color: #f78c6c;">item</span> <span style="color: #c792ea;">of</span> items; <span style="color: #c792ea;">track</span> item.id) {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  &lt;<span style="color: #f07178;">li</span>&gt;{{ item.nombre }}&lt;/<span style="color: #f07178;">li</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">} <span style="color: #c792ea;">@empty</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  &lt;<span style="color: #f07178;">p</span>&gt;No hay items&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 25: @SWITCH -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">@switch - Múltiples Casos</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">@switch</span> (estado) {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #c792ea;">@case</span> (<span style="color: #c3e88d;">'cargando'</span>) {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    &lt;<span style="color: #f07178;">p</span>&gt;Cargando...&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #c792ea;">@case</span> (<span style="color: #c3e88d;">'exito'</span>) {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    &lt;<span style="color: #f07178;">p</span>&gt;¡Datos cargados!&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #c792ea;">@case</span> (<span style="color: #c3e88d;">'error'</span>) {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    &lt;<span style="color: #f07178;">p</span>&gt;Error al cargar&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #c792ea;">@default</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    &lt;<span style="color: #f07178;">p</span>&gt;Estado desconocido&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 26: PIPES -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Pipes: transformar datos al mostrarlos</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Un pipe transforma un valor <strong>solo en la vista</strong>, sin modificar el dato original. Se usan con el símbolo <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">|</code> dentro de la interpolación.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.85rem;">
+    <p style="color: #6b7280; margin-bottom: 0.25rem;">&lt;!-- Mayúsculas --&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.75rem;">&lt;<span style="color: #f07178;">p</span>&gt;{{ nombre | <span style="color: #82aaff;">uppercase</span> }}&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.25rem;">&lt;!-- Fechas --&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.75rem;">&lt;<span style="color: #f07178;">p</span>&gt;{{ hoy | <span style="color: #82aaff;">date</span>:<span style="color: #c3e88d;">'dd/MM/yyyy'</span> }}&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.25rem;">&lt;!-- Moneda --&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.75rem;">&lt;<span style="color: #f07178;">p</span>&gt;{{ precio | <span style="color: #82aaff;">currency</span>:<span style="color: #c3e88d;">'EUR'</span> }}&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.25rem;">&lt;!-- JSON --&gt;</p>
+    <p style="color: #cbd5e1;">&lt;<span style="color: #f07178;">pre</span>&gt;{{ objeto | <span style="color: #82aaff;">json</span> }}&lt;/<span style="color: #f07178;">pre</span>&gt;</p>
+  </div>
+</section>
+
+<!-- SLIDE 26B: EJERCICIO CONTROL FLOW -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">💪 Ejercicio 3: Lista de Usuarios</h2>
+  <p class="text-lg mb-4" style="color: #cbd5e1;">Crea una lista con control flow moderno:</p>
+  <ul class="text-base" style="color: #cbd5e1;">
+    <li>Array de usuarios con (nombre, edad, rol)</li>
+    <li>@for para mostrar usuarios</li>
+    <li>@if para mostrar badge según rol</li>
+  </ul>
+  <p class="text-sm mt-6" style="color: #94a3b8;">⏱️ Tiempo: 7-10 minutos</p>
+</section>
+
+<!-- SLIDE 27: DESCANSO -->
+<section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+  <h1 class="text-6xl mb-4" style="color: #38bdf8;">☕ Descanso</h1>
+  <p class="text-2xl" style="color: #cbd5e1;">1 hora de descanso</p>
+  <p class="text-lg mt-8" style="color: #94a3b8;">Volveremos con Routing y HTTP</p>
+</section>
+
+<!-- SLIDE 28: ROUTING INTRO -->
+<section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+  <h1 class="text-5xl mb-4" style="color: #38bdf8;">Routing en Angular</h1>
+  <p class="text-2xl mb-4" style="color: #cbd5e1;">Navegar entre páginas sin recargar</p>
+  <p class="text-lg" style="color: #94a3b8;">Cada URL de tu app muestra un componente diferente.<br>Como las páginas de un libro, pero sin que el navegador tenga que hacer una nueva petición al servidor.</p>
+</section>
+
+<!-- SLIDE 29: CONFIGURAR RUTAS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Configurar Rutas</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Las rutas son como una "tabla de contenidos": dictan qué componente se renderiza según la URL visible en el navegador. <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">**</code> es el comodín para URLs que no existen (página 404).</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.7rem;">
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// app.routes.ts</p>
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">Routes</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/router'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export const</span> <span style="color: #f78c6c;">routes</span>: <span style="color: #82aaff;">Routes</span> = [</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  { <span style="color: #f78c6c;">path</span>: <span style="color: #c3e88d;">''</span>, <span style="color: #f78c6c;">component</span>: <span style="color: #82aaff;">HomeComponent</span> },</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  { <span style="color: #f78c6c;">path</span>: <span style="color: #c3e88d;">'productos'</span>, <span style="color: #f78c6c;">component</span>: <span style="color: #82aaff;">ProductosComponent</span> },</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  { <span style="color: #f78c6c;">path</span>: <span style="color: #c3e88d;">'producto/:id'</span>, <span style="color: #f78c6c;">component</span>: <span style="color: #82aaff;">DetalleComponent</span> },</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.75rem;">  { <span style="color: #f78c6c;">path</span>: <span style="color: #c3e88d;">'**'</span>, <span style="color: #f78c6c;">component</span>: <span style="color: #82aaff;">NotFoundComponent</span> }</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">];</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// main.ts</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #82aaff;">bootstrapApplication</span>(<span style="color: #82aaff;">AppComponent</span>, {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">providers</span>: [<span style="color: #82aaff;">provideRouter</span>(<span style="color: #f78c6c;">routes</span>)]</p>
+    <p style="color: #cbd5e1;">});</p>
+  </div>
+</section>
+
+<!-- SLIDE 30: ROUTER OUTLET -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Router Outlet: el "hueco" donde aparecen las páginas</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">&lt;router-outlet /&gt;</code> es el marcador de posición en tu template donde Angular insertará el componente correspondiente a la URL actual. El nav y el menú quedan fijos; sólo cambia el contenido del outlet.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #6b7280">// app.component.ts</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">import</span> { <span style="color: #82aaff">RouterOutlet</span> } <span style="color: #c792ea">from</span> <span style="color: #c3e88d">'@angular/router'</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #ffcb6b">@Component</span>({</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  standalone: <span style="color: #ff5370">true</span>,</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  imports: [<span style="color: #82aaff">RouterOutlet</span>],</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  template: `</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    &lt;nav&gt;<span style="color: #6b7280">&lt;!-- Menú --&gt;</span>&lt;/nav&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    &lt;router-outlet /&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  `</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">})</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">export</span> <span style="color: #c792ea">class</span> AppComponent {}</p>
+</div>
+</section>
+
+<!-- SLIDE 31: ROUTERLINK -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">RouterLink: navegar sin recargar la página</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Usa <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">routerLink</code> en lugar de <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">href</code>. La diferencia: <code>href</code> recarga toda la página; <code>routerLink</code> hace una navegación interna instantánea (SPA — Single Page Application).</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">import</span> { <span style="color: #82aaff">RouterLink</span> } <span style="color: #c792ea">from</span> <span style="color: #c3e88d">'@angular/router'</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #ffcb6b">@Component</span>({</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  imports: [<span style="color: #82aaff">RouterLink</span>],</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  template: `</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    &lt;a routerLink=<span style="color: #c3e88d">"/"</span>&gt;Home&lt;/a&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    &lt;a routerLink=<span style="color: #c3e88d">"/productos"</span>&gt;Productos&lt;/a&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    &lt;a [routerLink]=<span style="color: #c3e88d">"['/producto', id]"</span>&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      Ver Detalle</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    &lt;/a&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  `</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">})</p>
+</div>
+</section>
+
+<!-- SLIDE 32: PARÁMETROS DE RUTA -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Capturar Parámetros</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">import</span> { <span style="color: #82aaff">ActivatedRoute</span> } <span style="color: #c792ea">from</span> <span style="color: #c3e88d">'@angular/router'</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">export</span> <span style="color: #c792ea">class</span> DetalleComponent {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  route = inject(<span style="color: #82aaff">ActivatedRoute</span>);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  id = <span style="color: #82aaff">signal</span>(<span style="color: #c3e88d">''</span>);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  ngOnInit() {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #89ddff">this</span>.id.set(</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      <span style="color: #89ddff">this</span>.route.snapshot.params[<span style="color: #c3e88d">'id'</span>]</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    );</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 33: LAZY LOADING -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Lazy Loading: cargar bajo demanda</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 En lugar de enviar todo el código de la app de golpe, con Lazy Loading sólo se descarga cada sección cuando el usuario navega a ella. Resultado: carga inicial más rápida. Usando <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">loadComponent</code> Angular hace el split automáticamente.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">export</span> <span style="color: #c792ea">const</span> routes: Routes = [</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    path: <span style="color: #c3e88d">'admin'</span>,</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    loadComponent: () =&gt; </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      <span style="color: #c792ea">import</span>(<span style="color: #c3e88d">'./admin/admin.component'</span>)</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">        .then(m =&gt; m.AdminComponent)</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  },</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    path: <span style="color: #c3e88d">'dashboard'</span>,</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    loadChildren: () =&gt; </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      <span style="color: #c792ea">import</span>(<span style="color: #c3e88d">'./dashboard/routes'</span>)</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">];</p>
+</div>
+</section>
+
+<!-- SLIDE 33B: EJERCICIO ROUTING -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">💪 Ejercicio 4: Blog con Routing</h2>
+  <p class="text-lg mb-4" style="color: #cbd5e1;">Crea un blog simple:</p>
+  <ul class="text-base" style="color: #cbd5e1;">
+    <li>Ruta "/" con lista de posts</li>
+    <li>Ruta "/post/:id" para detalle</li>
+    <li>Navigation con RouterLink</li>
+  </ul>
+  <p class="text-sm mt-6" style="color: #94a3b8;">⏱️ Tiempo: 10-12 minutos</p>
+</section>
+
+<!-- SLIDE 34: HTTP CLIENT INTRO -->
+<section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+  <h1 class="text-5xl mb-4" style="color: #38bdf8;">HTTP Client</h1>
+  <p class="text-2xl mb-4" style="color: #cbd5e1;">Tu app hablando con el mundo exterior</p>
+  <p class="text-lg" style="color: #94a3b8;">Una API es como un camarero: tú le pides datos (GET), le envías datos nuevos (POST), o le dices que borre algo (DELETE). Angular incluye un servicio HTTP listo para usar.</p>
+</section>
+
+<!-- SLIDE 35: CONFIGURAR HTTP -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Configurar HTTP Client</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #6b7280">// main.ts</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">import</span> { provideHttpClient } <span style="color: #c792ea">from</span> <span style="color: #c3e88d">'@angular/common/http'</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">bootstrapApplication(AppComponent, {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  providers: [</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    provideRouter(routes),</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    provideHttpClient()</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  ]</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">});</p>
+</div>
+</section>
+
+<!-- SLIDE 36: CREAR SERVICIO -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Crear un Servicio HTTP</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Un <strong>servicio</strong> es una clase reutilizable que no es un componente. Su trabajo es encapsular la lógica de negocio (como las llamadas HTTP) para que los componentes no se ensucien con ese código.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">import</span> { <span style="color: #82aaff">Injectable</span>, inject } <span style="color: #c792ea">from</span> <span style="color: #c3e88d">'@angular/core'</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">import</span> { <span style="color: #82aaff">HttpClient</span> } <span style="color: #c792ea">from</span> <span style="color: #c3e88d">'@angular/common/http'</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #ffcb6b">@Injectable</span>({ providedIn: <span style="color: #c3e88d">'root'</span> })</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">export</span> <span style="color: #c792ea">class</span> ProductosService {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  http = inject(<span style="color: #82aaff">HttpClient</span>);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  url = 'https:<span style="color: #6b7280">//api.example.com/productos';</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  obtenerTodos() {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #c792ea">return</span> <span style="color: #89ddff">this</span>.http.get&lt;Producto[]&gt;(<span style="color: #89ddff">this</span>.url);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  obtenerPorId(id: <span style="color: #82aaff">number</span>) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #c792ea">return</span> <span style="color: #89ddff">this</span>.http.get&lt;Producto&gt;(`${<span style="color: #89ddff">this</span>.url}/${id}`);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 37: USAR SERVICIO -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Usar el Servicio en un Componente</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">inject()</code> obtiene una instancia del servicio (Angular la crea y gestiona automáticamente). <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">.subscribe()</code> espera a que llegue la respuesta HTTP y ejecuta el callback con los datos.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">export</span> <span style="color: #c792ea">class</span> ProductosComponent {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  service = inject(ProductosService);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  productos = <span style="color: #82aaff">signal</span>&lt;Producto[]&gt;([]);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  ngOnInit() {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #89ddff">this</span>.service.obtenerTodos()</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      .subscribe(datos =&gt; {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">        <span style="color: #89ddff">this</span>.productos.set(datos);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      });</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #6b7280">// Template</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #ffcb6b">@for</span> (p <span style="color: #c792ea">of</span> productos(); track p.id) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;div&gt;{{ p.nombre }}&lt;/div&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 38: SIGNALS + HTTP -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Signals + HTTP: el patrón más moderno</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">toSignal()</code> convierte un Observable (lo que devuelve HTTP) en una Signal. Así puedes usar los datos directamente en el template con <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">productos()</code>, sin necesidad de suscribirte manualmente.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">import</span> { toSignal } <span style="color: #c792ea">from</span> <span style="color: #c3e88d">'@angular/core/rxjs-interop'</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">export</span> <span style="color: #c792ea">class</span> ProductosComponent {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  service = inject(ProductosService);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #6b7280">// Convertir Observable a Signal</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  productos = toSignal(</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #89ddff">this</span>.service.obtenerTodos(),</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    { initialValue: [] }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  );</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #6b7280">// Uso directo en template</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #6b7280">// @for (p of productos(); track p.id)</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 39: POST REQUEST -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">POST: Crear Datos</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">export</span> <span style="color: #c792ea">class</span> ProductosService {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  crear(producto: Producto) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #c792ea">return</span> <span style="color: #89ddff">this</span>.http.post&lt;Producto&gt;(</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      <span style="color: #89ddff">this</span>.url, </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      producto</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    );</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #6b7280">// Usar</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">guardar() {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #c792ea">const</span> nuevo = { nombre: <span style="color: #c3e88d">'iPad'</span>, precio: <span style="color: #f78c6c">799</span> };</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #89ddff">this</span>.service.crear(nuevo).subscribe(</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    res =&gt; console.log(<span style="color: #c3e88d">'Creado:'</span>, res)</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  );</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 40: PUT Y DELETE -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">PUT y DELETE</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #6b7280">// Actualizar</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">actualizar(id: <span style="color: #82aaff">number</span>, datos: Producto) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #c792ea">return</span> <span style="color: #89ddff">this</span>.http.put&lt;Producto&gt;(</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    `${<span style="color: #89ddff">this</span>.url}/${id}`, datos</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  );</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #6b7280">// Eliminar</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">eliminar(id: <span style="color: #82aaff">number</span>) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #c792ea">return</span> <span style="color: #89ddff">this</span>.http.delete(</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    `${<span style="color: #89ddff">this</span>.url}/${id}`</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  );</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 41: PROYECTO PRÁCTICO -->
+<section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+  <h1 class="text-5xl mb-4" style="color: #38bdf8;">💻 Proyecto Práctico Final</h1>
+  <p class="text-2xl mb-4" style="color: #cbd5e1;">App de Tareas con API Real</p>
+  <p class="text-lg" style="color: #94a3b8;">Ponemos en práctica todo lo aprendido: componentes, signals, routing y HTTP, integrados en una app funcional.</p>
+</section>
+
+<!-- SLIDE 42: ESTRUCTURA PROYECTO -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Estructura del Proyecto</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Listar tareas desde JSONPlaceholder API</li>
+    <li>Agregar nuevas tareas</li>
+    <li>Marcar como completadas</li>
+    <li>Eliminar tareas</li>
+  </ul>
+</section>
+
+<!-- SLIDE 43: MODELO E INTERFAZ -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Definir el Modelo</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #6b7280">// models/tarea.interface.ts</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">export</span> <span style="color: #c792ea">interface</span> <span style="color: #82aaff">Tarea</span> {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  id: <span style="color: #82aaff">number</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  title: <span style="color: #82aaff">string</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  completed: <span style="color: #82aaff">boolean</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  userId: <span style="color: #82aaff">number</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 44: SERVICIO TAREAS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Servicio de Tareas</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #ffcb6b">@Injectable</span>({ providedIn: <span style="color: #c3e88d">'root'</span> })</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">export</span> <span style="color: #c792ea">class</span> TareasService {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  http = inject(<span style="color: #82aaff">HttpClient</span>);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  url = 'https:<span style="color: #6b7280">//jsonplaceholder.typicode.com/todos';</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  obtenerTareas() {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #c792ea">return</span> <span style="color: #89ddff">this</span>.http.get&lt;<span style="color: #82aaff">Tarea</span>[]&gt;(<span style="color: #89ddff">this</span>.url);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  crear(tarea: <span style="color: #82aaff">Partial</span>&lt;<span style="color: #82aaff">Tarea</span>&gt;) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #c792ea">return</span> <span style="color: #89ddff">this</span>.http.post&lt;<span style="color: #82aaff">Tarea</span>&gt;(<span style="color: #89ddff">this</span>.url, tarea);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  actualizar(id: <span style="color: #82aaff">number</span>, tarea: <span style="color: #82aaff">Partial</span>&lt;<span style="color: #82aaff">Tarea</span>&gt;) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #c792ea">return</span> <span style="color: #89ddff">this</span>.http.put&lt;<span style="color: #82aaff">Tarea</span>&gt;(`${<span style="color: #89ddff">this</span>.url}/${id}`, tarea);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 45: COMPONENTE TAREAS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Componente de Tareas (1/2)</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">export</span> <span style="color: #c792ea">class</span> TareasComponent <span style="color: #c792ea">implements</span> <span style="color: #82aaff">OnInit</span> {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  service = inject(TareasService);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  tareas = <span style="color: #82aaff">signal</span>&lt;<span style="color: #82aaff">Tarea</span>[]&gt;([]);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  nuevaTarea = <span style="color: #c3e88d">''</span>;<span style="color: #6b7280"> // string normal (compatible con ngModel)</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  pendientes = <span style="color: #82aaff">computed</span>(() =&gt; </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #89ddff">this</span>.tareas().filter(t =&gt; !t.completed).length</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  );</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  ngOnInit() {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #89ddff">this</span>.service.obtenerTareas()</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      .subscribe(datos =&gt; {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">        <span style="color: #89ddff">this</span>.tareas.set(datos.slice(<span style="color: #f78c6c">0</span>, <span style="color: #f78c6c">10</span>));</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      });</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 46: COMPONENTE TAREAS MÉTODOS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Componente de Tareas (2/2)</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">agregarTarea() {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #c792ea">const</span> nueva = {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    title: <span style="color: #89ddff">this</span>.nuevaTarea,</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    completed: <span style="color: #ff5370">false</span>,</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    userId: <span style="color: #f78c6c">1</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  };</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #89ddff">this</span>.service.crear(nueva).subscribe(t =&gt; {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #89ddff">this</span>.tareas.update(lista =&gt; [...lista, t]);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #89ddff">this</span>.nuevaTarea = <span style="color: #c3e88d">''</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  });</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">toggleCompletada(tarea: <span style="color: #82aaff">Tarea</span>) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #c792ea">const</span> actualizada = { ...tarea, </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    completed: !tarea.completed };</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #89ddff">this</span>.tareas.update(lista =&gt; </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    lista.map(t =&gt; t.id === tarea.id ? actualizada : t)</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  );</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 47: TEMPLATE TAREAS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Template de Tareas</h2>
+  <p class="text-sm mb-2" style="color: #94a3b8;">💡 <code style="background-color: #0f172a; padding: 0.1rem 0.3rem;">[(ngModel)]</code> sincroniza el input con la variable. <code style="background-color: #0f172a; padding: 0.1rem 0.3rem;">[class.completada]</code> aplica una clase CSS condicionalmente. <code style="background-color: #0f172a; padding: 0.1rem 0.3rem;">pendientes()</code> es una computed signal.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">&lt;div <span style="color: #c792ea">class</span>=<span style="color: #c3e88d">"container"</span>&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;h1&gt;Mis Tareas&lt;/h1&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;p&gt;Pendientes: {{ pendientes() }}&lt;/p&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;input [(ngModel)]=<span style="color: #c3e88d">"nuevaTarea"</span> </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    placeholder=<span style="color: #c3e88d">"Nueva tarea"</span>&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;button (click)=<span style="color: #c3e88d">"agregarTarea()"</span>&gt;Agregar&lt;/button&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;ul&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #ffcb6b">@for</span> (tarea <span style="color: #c792ea">of</span> tareas(); track tarea.id) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      &lt;li [<span style="color: #c792ea">class</span>.completada]=<span style="color: #c3e88d">"tarea.completed"</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">          (click)=<span style="color: #c3e88d">"toggleCompletada(tarea)"</span>&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">        {{ tarea.title }}</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      &lt;/li&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;/ul&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">&lt;/div&gt;</p>
+</div>
+</section>
+
+<!-- SLIDE 47B: EJERCICIO HTTP -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">💪 Ejercicio 5: Lista de Pokémon</h2>
+  <p class="text-lg mb-4" style="color: #cbd5e1;">Consume PokeAPI y muestra:</p>
+  <ul class="text-base" style="color: #cbd5e1;">
+    <li>GET a https://pokeapi.co/api/v2/pokemon</li>
+    <li>Muestra nombre e imagen de 20 pokémon</li>
+    <li>Usa Signals + toSignal()</li>
+  </ul>
+  <p class="text-sm mt-6" style="color: #94a3b8;">⏱️ Tiempo: 12-15 minutos</p>
+</section>
+
+<!-- SLIDE 48: FORMULARIOS REACTIVOS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Formularios Reactivos: validación desde TypeScript</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Con formularios reactivos, defines las reglas de validación en la clase (TypeScript), no en el HTML. Esto hace que sean más fáciles de testear y mantener que los formularios de template.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">import</span> { ReactiveFormsModule, FormBuilder } <span style="color: #c792ea">from</span> <span style="color: #c3e88d">'@angular/forms'</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">export</span> <span style="color: #c792ea">class</span> FormularioComponent {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  fb = inject(FormBuilder);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  form = <span style="color: #89ddff">this</span>.fb.group({</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    nombre: [<span style="color: #c3e88d">''</span>, Validators.required],</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    email: [<span style="color: #c3e88d">''</span>, [Validators.required, Validators.email]],</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    edad: [<span style="color: #f78c6c">0</span>, Validators.min(<span style="color: #f78c6c">18</span>)]</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  });</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  enviar() {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #c792ea">if</span> (<span style="color: #89ddff">this</span>.form.valid) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      console.log(<span style="color: #89ddff">this</span>.form.value);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 49: VALIDACIÓN FORMULARIOS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Validación en Template</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">&lt;form [formGroup]=<span style="color: #c3e88d">"form"</span> (ngSubmit)=<span style="color: #c3e88d">"enviar()"</span>&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;input formControlName=<span style="color: #c3e88d">"email"</span>&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #ffcb6b">@if</span> (form.get(<span style="color: #c3e88d">'email'</span>)?.invalid &amp;&amp; </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">       form.get(<span style="color: #c3e88d">'email'</span>)?.touched) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    &lt;p <span style="color: #c792ea">class</span>=<span style="color: #c3e88d">"error"</span>&gt;Email inválido&lt;/p&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  }</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;button [disabled]=<span style="color: #c3e88d">"form.invalid"</span>&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    Enviar</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;/button&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">&lt;/form&gt;</p>
+</div>
+</section>
+
+<!-- SLIDE 50: ZONELESS MODE -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-3" style="color: #38bdf8;">Zoneless Mode — El futuro de Angular</h2>
+  <p class="text-base mb-4" style="color: #94a3b8;">Zone.js era la librería que usaba Angular para detectar cambios automáticamente. Con Signals, ya no la necesitamos: Angular sabe exactamente qué ha cambiado y actualiza sólo eso.</p>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Bundles más pequeños (menos código descargado)</li>
+    <li>Arranque más rápido</li>
+    <li>Rendimiento mejorado en listas grandes</li>
+    <li>Compatible con todas las APIs de Signals</li>
+  </ul>
+</section>
+
+<!-- SLIDE 51: ACTIVAR ZONELESS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Activar Zoneless Mode</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #6b7280">// main.ts</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">import</span> { </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  provideZonelessChangeDetection </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">} <span style="color: #c792ea">from</span> <span style="color: #c3e88d">'@angular/core'</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">bootstrapApplication(AppComponent, {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  providers: [</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    provideZonelessChangeDetection()</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  ]</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">});</p>
+</div>
+</section>
+
+<!-- SLIDE 52: DEFERRABLE VIEWS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Deferrable Views: Lazy Loading en el template</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Con <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">@defer</code> puedes decir “no cargues este componente hasta que el usuario llegue a él con el scroll”. Angular lo descarga sólo si y cuando hace falta.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #ffcb6b">@defer</span> (on viewport) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;app-grafico-pesado /&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">} <span style="color: #ffcb6b">@placeholder</span> {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;p&gt;Cargando gráfico...&lt;/p&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">} <span style="color: #ffcb6b">@loading</span> (minimum 1s) {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;app-spinner /&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">} <span style="color: #ffcb6b">@error</span> {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  &lt;p&gt;Error al cargar&lt;/p&gt;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">}</p>
+</div>
+</section>
+
+<!-- SLIDE 53: SSR Y HYDRATION -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">SSR y Hydration (Angular 20+)</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Server-Side Rendering mejorado</li>
+    <li>Hidratación incremental más rápida</li>
+    <li>Mejor SEO y Core Web Vitals</li>
+    <li>Menos cambios de layout después de cargar</li>
+  </ul>
+</section>
+
+<!-- SLIDE 54: BUENAS PRÁCTICAS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-3" style="color: #38bdf8;">✅ Buenas Prácticas desde el primer día</h2>
+  <p class="text-base mb-3" style="color: #94a3b8;">Adoptar estas prácticas desde el principio evita reescribir código más adelante.</p>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Usa <strong>Standalone components</strong> siempre (por defecto en v21)</li>
+    <li>Prefiere <strong>Signals</strong> sobre variables normales para estado reactivo</li>
+    <li>Control flow moderno (<code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">@if</code>, <code style="background-color: #1e293b; padding: 0.1rem 0.4rem;">@for</code>)</li>
+    <li>Lazy loading en rutas pesadas o secciones admin</li>
+  </ul>
+</section>
+
+<!-- SLIDE 55: ESTRUCTURA PROYECTO -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-2" style="color: #38bdf8;">Estructura Recomendada de Proyecto</h2>
+  <p class="text-sm mb-3" style="color: #94a3b8;">💡 Organizar el código por <strong>funcionalidad</strong> (features) en vez de por tipo de archivo evita que todo acabe mezclado conforme crece la app.</p>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">src/app/</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">├── core/              ← Servicios globales</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">├── shared/            ← Componentes reutilizables</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">├── features/          ← Módulos por funcionalidad</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">│   ├── productos/</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">│   ├── usuarios/</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">│   └── admin/</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">└── models/            ← Interfaces y tipos</p>
+</div>
+</section>
+
+<!-- SLIDE 56: TESTING BÁSICO -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Testing con Signals</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">import</span> { TestBed } <span style="color: #c792ea">from</span> <span style="color: #c3e88d">'@angular/core/testing'</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">describe(<span style="color: #c3e88d">'ContadorComponent'</span>, () =&gt; {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  it(<span style="color: #c3e88d">'incrementa el contador'</span>, () =&gt; {</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #c792ea">const</span> fixture = TestBed.createComponent(</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">      ContadorComponent</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    );</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    <span style="color: #c792ea">const</span> component = fixture.componentInstance;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    </p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    component.incrementar();</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">    expect(component.contador()).toBe(<span style="color: #f78c6c">1</span>);</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  });</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">});</p>
+</div>
+</section>
+
+<!-- SLIDE 57: RECURSOS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">📚 Recursos para Seguir</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Documentación oficial: angular.dev</li>
+    <li>Angular Blog (actualizaciones)</li>
+    <li>GitHub: angular/angular</li>
+    <li>Comunidad: Discord y Reddit</li>
+  </ul>
+</section>
+
+<!-- SLIDE 58: PRÓXIMOS PASOS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">🚀 Próximos Pasos</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Practica creando componentes standalone</li>
+    <li>Experimenta con Signals en tus proyectos</li>
+    <li>Migra proyectos antiguos al nuevo control flow</li>
+    <li>Construye una app completa con routing y HTTP</li>
+  </ul>
+</section>
+
+<!-- SLIDE 58B: RESUMEN EJERCICIOS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">📝 Resumen de Ejercicios</h2>
+  <ul class="text-base" style="color: #cbd5e1;">
+    <li><strong>Ejercicio 1:</strong> Tarjeta de perfil (data binding)</li>
+    <li><strong>Ejercicio 2:</strong> Carrito con Signals</li>
+    <li><strong>Ejercicio 3:</strong> Lista con control flow</li>
+    <li><strong>Ejercicio 4:</strong> Blog con routing</li>
+    <li><strong>Ejercicio 5:</strong> Pokémon con HTTP</li>
+  </ul>
+  <p class="text-sm mt-6" style="color: #94a3b8;">Lleva las soluciones preparadas para mostrar en vivo</p>
+</section>
+
+<!-- SEPARADOR: TEMAS AVANZADOS -->
+<section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+  <h1 class="text-5xl mb-4" style="color: #38bdf8;">📚 Temas para Ir Más Allá</h1>
+  <p class="text-2xl mb-4" style="color: #cbd5e1;">Referencia y exploración posterior</p>
+  <p class="text-lg" style="color: #94a3b8;">Las siguientes diapositivas cubren temas avanzados e integraciones del ecosistema Angular.<br>Son material de referencia para cuando ya tengas la base dominada.</p>
+</section>
+
+<!-- SLIDE 59: ANGULAR CLI AVANZADO -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Angular CLI: Comandos Útiles</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li><code style="background-color: #1e293b; padding: 0.2rem 0.5rem;">ng build</code> - Compilar para producción</li>
+    <li><code style="background-color: #1e293b; padding: 0.2rem 0.5rem;">ng test</code> - Ejecutar pruebas unitarias</li>
+    <li><code style="background-color: #1e293b; padding: 0.2rem 0.5rem;">ng lint</code> - Análisis de código</li>
+    <li><code style="background-color: #1e293b; padding: 0.2rem 0.5rem;">ng update</code> - Actualizar dependencias</li>
+  </ul>
+</section>
+
+<!-- SLIDE 60: OPTIMIZACIÓN BUNDLE -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Optimización del Bundle</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Lazy loading automático con rutas</li>
+    <li>Tree-shaking de código no usado</li>
+    <li>Compilación AOT por defecto</li>
+    <li>Deferrable views para cargas diferidas</li>
+  </ul>
+</section>
+
+<!-- SLIDE 61: DEPENDENCY INJECTION -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Dependency Injection Moderna</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.8rem;">
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Forma moderna con inject()</p>
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">inject</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">MiComponent</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">http</span> = <span style="color: #82aaff;">inject</span>(<span style="color: #82aaff;">HttpClient</span>);</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">router</span> = <span style="color: #82aaff;">inject</span>(<span style="color: #82aaff;">Router</span>);</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 62: GUARDS FUNCIONALES -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Guards Funcionales</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">CanActivateFn</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/router'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export const</span> <span style="color: #f78c6c;">authGuard</span>: <span style="color: #82aaff;">CanActivateFn</span> =</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  (<span style="color: #f78c6c;">route</span>, <span style="color: #f78c6c;">state</span>) =&gt; {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #c792ea;">const</span> <span style="color: #f78c6c;">auth</span> = <span style="color: #82aaff;">inject</span>(<span style="color: #82aaff;">AuthService</span>);</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #c792ea;">return</span> <span style="color: #f78c6c;">auth</span>.<span style="color: #82aaff;">isLoggedIn</span>();</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">  };</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Usar en ruta</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">{ <span style="color: #f78c6c;">path</span>: <span style="color: #c3e88d;">'admin'</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">canActivate</span>: [<span style="color: #f78c6c;">authGuard</span>],</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">component</span>: <span style="color: #82aaff;">AdminComponent</span> }</p>
+  </div>
+</section>
+
+<!-- SLIDE 63: INTERCEPTORS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">HTTP Interceptors</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.7rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">HttpInterceptorFn</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/common/http'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export const</span> <span style="color: #f78c6c;">authInterceptor</span>: <span style="color: #82aaff;">HttpInterceptorFn</span> =</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  (<span style="color: #f78c6c;">req</span>, <span style="color: #f78c6c;">next</span>) =&gt; {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #c792ea;">const</span> <span style="color: #f78c6c;">token</span> = <span style="color: #c3e88d;">'mi-token-jwt'</span>;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">    </p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #c792ea;">const</span> <span style="color: #f78c6c;">cloned</span> = <span style="color: #f78c6c;">req</span>.<span style="color: #82aaff;">clone</span>({</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      <span style="color: #f78c6c;">setHeaders</span>: {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">        <span style="color: #f78c6c;">Authorization</span>: <span style="color: #c3e88d;">`Bearer ${token}`</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      }</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    });</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">    </p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #c792ea;">return</span> <span style="color: #82aaff;">next</span>(<span style="color: #f78c6c;">cloned</span>);</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  };</p>
+  </div>
+</section>
+
+<!-- SLIDE 64: ENVIRONMENT CONFIG -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Configuración por Entorno</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// environment.ts</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export const</span> <span style="color: #f78c6c;">environment</span> = {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">production</span>: <span style="color: #ff5370;">false</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">apiUrl</span>: <span style="color: #c3e88d;">'http://localhost:3000'</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">};</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Usar en servicio</p>
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #f78c6c;">environment</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'../environments/environment'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #f78c6c;">url</span> = <span style="color: #f78c6c;">environment</span>.<span style="color: #f78c6c;">apiUrl</span>;</p>
+  </div>
+</section>
+
+<!-- SLIDE 65: VIEWCHILD Y SIGNALS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">ViewChild con Signals</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">viewChild</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">MiComponent</span> {</p>
+    <p style="color: #6b7280; margin-bottom: 0.25rem;">  // Signal-based ViewChild</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  <span style="color: #f78c6c;">input</span> = <span style="color: #82aaff;">viewChild</span>&lt;<span style="color: #82aaff;">ElementRef</span>&gt;(<span style="color: #c3e88d;">'miInput'</span>);</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #82aaff;">enfocar</span>() {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">input</span>()?.<span style="color: #f78c6c;">nativeElement</span>.<span style="color: #82aaff;">focus</span>();</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 66: INPUT OUTPUT SIGNALS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Input/Output con Signals</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.7rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">input</span>, <span style="color: #82aaff;">output</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">BotonComponent</span> {</p>
+    <p style="color: #6b7280; margin-bottom: 0.25rem;">  // Input signal (readonly)</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  <span style="color: #f78c6c;">texto</span> = <span style="color: #82aaff;">input</span>&lt;<span style="color: #82aaff;">string</span>&gt;(<span style="color: #c3e88d;">'Click'</span>);</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.25rem;">  // Output signal</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  <span style="color: #f78c6c;">clicked</span> = <span style="color: #82aaff;">output</span>&lt;<span style="color: #82aaff;">void</span>&gt;();</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #82aaff;">onClick</span>() {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">clicked</span>.<span style="color: #82aaff;">emit</span>();</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 67: DIRECTIVAS PERSONALIZADAS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Directivas Personalizadas</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.7rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">Directive</span>, <span style="color: #82aaff;">HostListener</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #ffcb6b;">@Directive</span>({</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">selector</span>: <span style="color: #c3e88d;">'[appHighlight]'</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">standalone</span>: <span style="color: #ff5370;">true</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">})</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">HighlightDirective</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">el</span> = <span style="color: #82aaff;">inject</span>(<span style="color: #82aaff;">ElementRef</span>);</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  </p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #ffcb6b;">@HostListener</span>(<span style="color: #c3e88d;">'mouseenter'</span>)</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #82aaff;">onEnter</span>() {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">el</span>.<span style="color: #f78c6c;">nativeElement</span>.<span style="color: #f78c6c;">style</span>.<span style="color: #f78c6c;">backgroundColor</span> = <span style="color: #c3e88d;">'yellow'</span>;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 68: PIPES PERSONALIZADOS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Pipes Personalizados</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">Pipe</span>, <span style="color: #82aaff;">PipeTransform</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #ffcb6b;">@Pipe</span>({</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">name</span>: <span style="color: #c3e88d;">'truncate'</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">standalone</span>: <span style="color: #ff5370;">true</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">})</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">TruncatePipe</span> <span style="color: #c792ea;">implements</span> <span style="color: #82aaff;">PipeTransform</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #82aaff;">transform</span>(<span style="color: #f78c6c;">value</span>: <span style="color: #82aaff;">string</span>, <span style="color: #f78c6c;">limit</span> = <span style="color: #f78c6c;">20</span>) {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #c792ea;">return</span> <span style="color: #f78c6c;">value</span>.<span style="color: #f78c6c;">length</span> &gt; <span style="color: #f78c6c;">limit</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      ? <span style="color: #f78c6c;">value</span>.<span style="color: #82aaff;">substring</span>(<span style="color: #f78c6c;">0</span>, <span style="color: #f78c6c;">limit</span>) + <span style="color: #c3e88d;">'...'</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      : <span style="color: #f78c6c;">value</span>;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 69: ANIMACIONES -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Animaciones en Angular</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Módulo @angular/animations</li>
+    <li>Transiciones state-based</li>
+    <li>Animaciones de entrada/salida</li>
+    <li>Soporte para keyframes avanzados</li>
+  </ul>
+</section>
+
+<!-- SLIDE 70: STATE MANAGEMENT -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">State Management</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Signals nativos (opción recomendada)</li>
+    <li>NgRx para casos complejos</li>
+    <li>Akita, NGXS (alternativas)</li>
+    <li>Services con Signals para casos simples</li>
+  </ul>
+</section>
+
+<!-- SLIDE 71: PERFORMANCE TIPS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">⚡ Tips de Performance</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>OnPush change detection strategy</li>
+    <li>TrackBy en @for para listas grandes</li>
+    <li>Lazy loading de módulos pesados</li>
+    <li>Deferrable views para contenido diferido</li>
+  </ul>
+</section>
+
+<!-- SLIDE 72: ERRORES COMUNES -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">❌ Errores Comunes</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Olvidar importar módulos necesarios</li>
+    <li>No usar track en @for</li>
+    <li>Mutar signals sin set() o update()</li>
+    <li>Subscripciones sin unsubscribe</li>
+  </ul>
+</section>
+
+<!-- SLIDE 73: MIGRACIONES -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Migrar a Angular Moderno</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">ng generate <span style="color: #ffcb6b">@angular</span>/core:standalone</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">ng generate <span style="color: #ffcb6b">@angular</span>/core:control-flow</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">ng update <span style="color: #ffcb6b">@angular</span>/cli <span style="color: #ffcb6b">@angular</span>/core</p>
+</div>
+</section>
+
+<!-- SLIDE 74: ANGULAR MATERIAL -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Angular Material</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">ng add <span style="color: #ffcb6b">@angular</span>/material</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c792ea">import</span> { MatButtonModule } <span style="color: #c792ea">from</span> <span style="color: #c3e88d">'@angular/material/button'</span>;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #ffcb6b">@Component</span>({</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  imports: [MatButtonModule],</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  template: `&lt;button mat-raised-button&gt;Click&lt;/button&gt;`</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">})</p>
+</div>
+</section>
+
+<!-- SLIDE 75: TAILWIND CSS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Integrar Tailwind CSS</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">npm install -D tailwindcss postcss autoprefixer</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">npx tailwindcss init</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #c3e88d">"styles"</span>: [</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">  <span style="color: #c3e88d">"src/styles.css"</span></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">]</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #ffcb6b">@tailwind</span> base;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #ffcb6b">@tailwind</span> components;</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"><span style="color: #ffcb6b">@tailwind</span> utilities;</p>
+</div>
+</section>
+
+<!-- SLIDE 76: ANGULAR UNIVERSAL -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Angular Universal (SSR)</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Renderizado del lado del servidor</li>
+    <li>Mejor SEO y tiempo de carga inicial</li>
+    <li>Hidratación incremental en v20+</li>
+    <li>Compatible con deployment en Node.js</li>
+  </ul>
+</section>
+
+<!-- SLIDE 77: PWA -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Progressive Web App (PWA)</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">ng add <span style="color: #ffcb6b">@angular</span>/pwa</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">- manifest.webmanifest</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">- service-worker.js</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">- iconos de app</p>
+</div>
+  <p class="text-base mt-4" style="color: #cbd5e1;">Tu app funcionará offline y será instalable</p>
+</section>
+
+<!-- SLIDE 78: DEPLOYMENT -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">🚀 Deployment</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Vercel, Netlify (hosting estático)</li>
+    <li>Firebase Hosting</li>
+    <li>AWS S3 + CloudFront</li>
+    <li>Docker + Kubernetes (enterprise)</li>
+  </ul>
+</section>
+
+<!-- SLIDE 79: ANGULAR DEVTOOLS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">🔧 Angular DevTools</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Extensión de Chrome/Edge/Firefox</li>
+    <li>Inspector de componentes en vivo</li>
+    <li>Profiler de rendimiento</li>
+    <li>Debug de dependency injection</li>
+  </ul>
+</section>
+
+<!-- SLIDE 80: COMUNIDAD Y SOPORTE -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">🌐 Comunidad Angular</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Angular Discord oficial</li>
+    <li>Stack Overflow (etiqueta angular)</li>
+    <li>Reddit r/Angular2</li>
+    <li>Twitter/X @angular</li>
+  </ul>
+</section>
+
+<!-- SLIDE 81: RXJS Y OBSERVABLES -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">RxJS y Observables</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Base de HTTP Client y eventos asíncronos</li>
+    <li>Operadores: map, filter, switchMap, debounceTime</li>
+    <li>Combinación: combineLatest, forkJoin, merge</li>
+    <li>Migrar a Signals cuando sea posible</li>
+  </ul>
+</section>
+
+<!-- SLIDE 82: OPERADORES RXJS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Operadores RxJS Comunes</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.7rem;">
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">http</span>.<span style="color: #82aaff;">get</span>(<span style="color: #f78c6c;">url</span>)</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  .<span style="color: #82aaff;">pipe</span>(</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #82aaff;">map</span>(<span style="color: #f78c6c;">data</span> =&gt; <span style="color: #f78c6c;">data</span>.<span style="color: #f78c6c;">results</span>),</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #82aaff;">filter</span>(<span style="color: #f78c6c;">items</span> =&gt; <span style="color: #f78c6c;">items</span>.<span style="color: #f78c6c;">length</span> &gt; <span style="color: #f78c6c;">0</span>),</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #82aaff;">catchError</span>(<span style="color: #f78c6c;">err</span> =&gt; <span style="color: #82aaff;">of</span>([]))</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  )</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  .<span style="color: #82aaff;">subscribe</span>(<span style="color: #f78c6c;">data</span> =&gt; {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #89ddff;">console</span>.<span style="color: #82aaff;">log</span>(<span style="color: #f78c6c;">data</span>);</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  });</p>
+  </div>
+</section>
+
+<!-- SLIDE 83: CONTENT PROJECTION -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Content Projection (ng-content)</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Componente Card</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #f78c6c;">template</span>: <span style="color: #c3e88d;">`</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c3e88d;">  &lt;div class="card"&gt;</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c3e88d;">    &lt;ng-content select="[header]"&gt;&lt;/ng-content&gt;</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c3e88d;">    &lt;ng-content&gt;&lt;/ng-content&gt;</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.75rem;"><span style="color: #c3e88d;">  &lt;/div&gt;`</span></p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Uso</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;<span style="color: #f07178;">app-card</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  &lt;<span style="color: #f07178;">h2</span> <span style="color: #c792ea;">header</span>&gt;Título&lt;/<span style="color: #f07178;">h2</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  &lt;<span style="color: #f07178;">p</span>&gt;Contenido aquí&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;/<span style="color: #f07178;">app-card</span>&gt;</p>
+  </div>
+</section>
+
+<!-- SLIDE 84: HOST BINDING -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Host Binding y Host Listener</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.7rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">HostBinding</span>, <span style="color: #82aaff;">HostListener</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">BotonComponent</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  <span style="color: #ffcb6b;">@HostBinding</span>(<span style="color: #c3e88d;">'class.active'</span>) <span style="color: #f78c6c;">isActive</span> = <span style="color: #ff5370;">false</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #ffcb6b;">@HostListener</span>(<span style="color: #c3e88d;">'click'</span>)</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #82aaff;">onClick</span>() {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">isActive</span> = !<span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">isActive</span>;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 85: DYNAMIC COMPONENTS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Componentes Dinámicos</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Crear componentes en tiempo de ejecución</li>
+    <li>ViewContainerRef y ComponentRef</li>
+    <li>Útil para modales, tooltips, notificaciones</li>
+  </ul>
+</section>
+
+<!-- SLIDE 86: ASYNC PIPE -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Async Pipe</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.8rem;">
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Componente</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #f78c6c;">usuarios$</span> = <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">http</span>.</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">  <span style="color: #82aaff;">get</span>&lt;<span style="color: #82aaff;">Usuario</span>[]&gt;(<span style="color: #c3e88d;">'api/users'</span>);</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Template</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">@for</span> (<span style="color: #f78c6c;">user</span> <span style="color: #c792ea;">of</span> usuarios$ | <span style="color: #82aaff;">async</span>;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      <span style="color: #c792ea;">track</span> user.id) {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  &lt;<span style="color: #f07178;">p</span>&gt;{{ user.nombre }}&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 87: RENDERER2 -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Renderer2: Manipulación Segura DOM</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">Renderer2</span>, <span style="color: #82aaff;">ElementRef</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">MiComponent</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">renderer</span> = <span style="color: #82aaff;">inject</span>(<span style="color: #82aaff;">Renderer2</span>);</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  <span style="color: #f78c6c;">el</span> = <span style="color: #82aaff;">inject</span>(<span style="color: #82aaff;">ElementRef</span>);</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #82aaff;">cambiarColor</span>() {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">renderer</span>.<span style="color: #82aaff;">setStyle</span>(</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      <span style="color: #89ddff;">this</span>.<span style="color: #f78c6c;">el</span>.<span style="color: #f78c6c;">nativeElement</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      <span style="color: #c3e88d;">'backgroundColor'</span>, <span style="color: #c3e88d;">'blue'</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    );</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1;">}</p>
+  </div>
+</section>
+
+<!-- SLIDE 88: CHANGE DETECTION -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Change Detection Strategies</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Default: comprueba todos los componentes</li>
+    <li>OnPush: solo si Inputs cambian o eventos</li>
+    <li>Con Signals: detección automática optimizada</li>
+    <li>Zoneless: control total con Signals</li>
+  </ul>
+</section>
+
+<!-- SLIDE 89: TEMPLATE REFERENCE -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Template Reference Variables</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.8rem;">
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Acceso directo a elemento</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;<span style="color: #f07178;">input</span> <span style="color: #c792ea;">#emailInput</span> <span style="color: #c792ea;">type</span>=<span style="color: #c3e88d;">"email"</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">&lt;<span style="color: #f07178;">button</span> (<span style="color: #c792ea;">click</span>)=<span style="color: #c3e88d;">"enviar(emailInput.value)"</span>&gt;</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Acceso a componente hijo</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;<span style="color: #f07178;">app-form</span> <span style="color: #c792ea;">#formulario</span>&gt;&lt;/<span style="color: #f07178;">app-form</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;<span style="color: #f07178;">button</span> (<span style="color: #c792ea;">click</span>)=<span style="color: #c3e88d;">"formulario.reset()"</span>&gt;</p>
+  </div>
+</section>
+
+<!-- SLIDE 90: NG-TEMPLATE -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">ng-template y ng-container</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">&lt;!-- ng-template: definir plantilla --&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;<span style="color: #f07178;">ng-template</span> <span style="color: #c792ea;">#loading</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  &lt;<span style="color: #f07178;">p</span>&gt;Cargando...&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 1rem;">&lt;/<span style="color: #f07178;">ng-template</span>&gt;</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">&lt;!-- ng-container: agrupar sin DOM --&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;<span style="color: #f07178;">ng-container</span> <span style="color: #c792ea;">*ngIf</span>=<span style="color: #c3e88d;">"mostrar"</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  &lt;<span style="color: #f07178;">h2</span>&gt;Título&lt;/<span style="color: #f07178;">h2</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  &lt;<span style="color: #f07178;">p</span>&gt;Contenido&lt;/<span style="color: #f07178;">p</span>&gt;</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">&lt;/<span style="color: #f07178;">ng-container</span>&gt;</p>
+  </div>
+</section>
+
+<!-- SLIDE 91: SERVICIOS SINGLETON -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Servicios Singleton vs Scoped</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>providedIn: 'root' → Singleton global</li>
+    <li>providedIn: 'platform' → Compartido entre apps</li>
+    <li>providers: [...] en componente → Scoped</li>
+    <li>Usa singleton para estado compartido</li>
+  </ul>
+</section>
+
+<!-- SLIDE 92: MULTI PROVIDERS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Multi Providers</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.75rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">HTTP_INTERCEPTORS</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/common/http'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #82aaff;">bootstrapApplication</span>(<span style="color: #82aaff;">AppComponent</span>, {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #f78c6c;">providers</span>: [</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      <span style="color: #f78c6c;">provide</span>: <span style="color: #82aaff;">HTTP_INTERCEPTORS</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      <span style="color: #f78c6c;">useClass</span>: <span style="color: #82aaff;">AuthInterceptor</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">      <span style="color: #f78c6c;">multi</span>: <span style="color: #ff5370;">true</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    }</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  ]</p>
+    <p style="color: #cbd5e1;">});</p>
+  </div>
+</section>
+
+<!-- SLIDE 93: LOCALIZACIÓN I18N -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Internacionalización (i18n)</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>@angular/localize para múltiples idiomas</li>
+    <li>Atributo i18n en elementos HTML</li>
+    <li>Builds separados por idioma</li>
+    <li>Traducción de fechas, números y monedas</li>
+  </ul>
+</section>
+
+<!-- SLIDE 94: ACCESSIBILITY -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">♿ Accesibilidad (a11y)</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Usar roles ARIA apropiados</li>
+    <li>Labels en todos los inputs</li>
+    <li>Navegación por teclado funcional</li>
+    <li>Contraste de colores WCAG AA/AAA</li>
+  </ul>
+</section>
+
+<!-- SLIDE 95: SECURITY -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">🔒 Seguridad</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Sanitización automática de HTML</li>
+    <li>CSP (Content Security Policy)</li>
+    <li>Validación en cliente Y servidor</li>
+    <li>HTTPS obligatorio en producción</li>
+  </ul>
+</section>
+
+<!-- SLIDE 96: ERROR HANDLING -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Manejo Global de Errores</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.7rem;">
+    <p style="color: #c792ea; margin-bottom: 0.75rem;"><span style="color: #c792ea;">import</span> { <span style="color: #82aaff;">ErrorHandler</span> } <span style="color: #c792ea;">from</span> <span style="color: #c3e88d;">'@angular/core'</span>;</p>
+    
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #c792ea;">export class</span> <span style="color: #82aaff;">GlobalErrorHandler</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #c792ea;">implements</span> <span style="color: #82aaff;">ErrorHandler</span> {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">  </p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  <span style="color: #82aaff;">handleError</span>(<span style="color: #f78c6c;">error</span>: <span style="color: #82aaff;">Error</span>) {</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #89ddff;">console</span>.<span style="color: #82aaff;">error</span>(<span style="color: #c3e88d;">'Error global:'</span>, <span style="color: #f78c6c;">error</span>);</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #6b7280;">// Enviar a servicio de logs</span></p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  }</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.5rem;">}</p>
+    
+    <p style="color: #6b7280; margin-bottom: 0.5rem;">// Registrar</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;"><span style="color: #f78c6c;">providers</span>: [</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">  { <span style="color: #f78c6c;">provide</span>: <span style="color: #82aaff;">ErrorHandler</span>,</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">    <span style="color: #f78c6c;">useClass</span>: <span style="color: #82aaff;">GlobalErrorHandler</span> }</p>
+    <p style="color: #cbd5e1; margin-bottom: 0.25rem;">]</p>
+  </div>
+</section>
+
+<!-- SLIDE 97: LOGGING -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">📊 Logging y Monitoring</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Sentry para tracking de errores</li>
+    <li>Google Analytics / Mixpanel</li>
+    <li>LogRocket para sesiones de usuario</li>
+    <li>Angular DevTools en desarrollo</li>
+  </ul>
+</section>
+
+<!-- SLIDE 98: TESTING E2E -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Testing E2E</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Cypress (recomendado)</li>
+    <li>Playwright (alternativa moderna)</li>
+    <li>Protractor (deprecado, no usar)</li>
+    <li>Simular flujos completos de usuario</li>
+  </ul>
+</section>
+
+<!-- SLIDE 99: CI CD -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">CI/CD Pipeline</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>GitHub Actions (integración nativa)</li>
+    <li>GitLab CI, CircleCI, Jenkins</li>
+    <li>Automatizar: lint, test, build, deploy</li>
+    <li>Preview deployments con Vercel/Netlify</li>
+  </ul>
+</section>
+
+<!-- SLIDE 100: MONOREPO NX -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Monorepo con Nx</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Gestionar múltiples apps/librerías</li>
+    <li>Caché inteligente de builds</li>
+    <li>Dependency graph visual</li>
+    <li>Ideal para equipos grandes</li>
+  </ul>
+</section>
+
+<!-- SLIDE 101: MICRO FRONTENDS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Micro Frontends</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Module Federation (Webpack 5)</li>
+    <li>Apps Angular independientes</li>
+    <li>Compartir dependencias comunes</li>
+    <li>Deploy y escalado independiente</li>
+  </ul>
+</section>
+
+<!-- SLIDE 102: WEB COMPONENTS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Angular Elements</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Convertir componentes a Web Components</li>
+    <li>Usar Angular en apps no-Angular</li>
+    <li>Custom Elements nativos del navegador</li>
+    <li>Interoperabilidad con otros frameworks</li>
+  </ul>
+</section>
+
+<!-- SLIDE 103: SERVICE WORKERS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Service Workers Personalizados</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Caché de assets estratégica</li>
+    <li>Background sync para requests offline</li>
+    <li>Push notifications</li>
+    <li>Actualización automática de versiones</li>
+  </ul>
+</section>
+
+<!-- SLIDE 104: WEB WORKERS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Web Workers</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Cálculos pesados fuera del thread principal</li>
+    <li>No bloquear la UI</li>
+    <li>Angular CLI integra generación automática</li>
+    <li>Ideal para procesamiento de datos masivos</li>
+  </ul>
+</section>
+
+<!-- SLIDE 105: BUNDLE ANALYSIS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-4" style="color: #38bdf8;">Análisis de Bundle</h2>
+  <div style="background-color: #1e293b; padding: 1.5rem; font-family: Courier New, monospace; font-size: 0.8rem; border-radius: 0.5rem; overflow-x: auto; white-space: pre-wrap;">
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">npm install -g webpack-bundle-analyzer</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">ng build --stats-json</p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;"></p>
+<p style="color: #cbd5e1; margin-bottom: 0.25rem; margin-top: 0;">webpack-bundle-analyzer dist/stats.json</p>
+</div>
+  <p class="text-base mt-4" style="color: #cbd5e1;">Identifica dependencias grandes y optimiza</p>
+</section>
+
+<!-- SLIDE 106: PERFORMANCE BUDGET -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Performance Budget</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Define límites de tamaño en angular.json</li>
+    <li>CI falla si bundle excede límites</li>
+    <li>Mantén app rápida desde el principio</li>
+    <li>Core Web Vitals como métricas</li>
+  </ul>
+</section>
+
+<!-- SLIDE 107: ANGULAR 22 PREVIEW -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">🔮 Angular 22+ (Futuro)</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Signals estables en toda la API</li>
+    <li>Zoneless por defecto</li>
+    <li>Mejoras continuas en rendimiento</li>
+    <li>Mejor integración con frameworks meta</li>
+  </ul>
+</section>
+
+<!-- SLIDE 108: ECOSISTEMA -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Ecosistema Angular</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Angular Material, PrimeNG, Ant Design</li>
+    <li>NgRx, Akita para state management</li>
+    <li>NG-ZORRO, Nebular UI frameworks</li>
+    <li>Chart.js, D3.js para gráficos</li>
+  </ul>
+</section>
+
+<!-- SLIDE 109: COMPARACIÓN FRAMEWORKS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Angular vs React vs Vue</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li><strong>Angular:</strong> Framework completo, enterprise</li>
+    <li><strong>React:</strong> Librería flexible, comunidad enorme</li>
+    <li><strong>Vue:</strong> Balance, curva de aprendizaje suave</li>
+    <li>Todos son excelentes, elige según proyecto</li>
+  </ul>
+</section>
+
+<!-- SLIDE 110: MIGRACIÓN DESDE ANGULARJS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Migración desde AngularJS</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>ngUpgrade para migración híbrida</li>
+    <li>Migrar componente por componente</li>
+    <li>AngularJS EOL: considera migración total</li>
+    <li>Reescribir puede ser más rápido que migrar</li>
+  </ul>
+</section>
+
+<!-- SLIDE 111: CARRERA PROFESIONAL -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">💼 Carrera con Angular</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Demanda alta en empresas enterprise</li>
+    <li>Certificación Angular oficial</li>
+    <li>Contribuir a proyectos open source</li>
+    <li>Especializaciones: arquitectura, performance</li>
+  </ul>
+</section>
+
+<!-- SLIDE 112: LIBROS Y CURSOS -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">📖 Recursos de Aprendizaje</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Angular.dev - Documentación oficial nueva</li>
+    <li>"Angular: Up and Running" (libro)</li>
+    <li>Maximilian Schwarzmüller (Udemy)</li>
+    <li>Angular University (cursos avanzados)</li>
+  </ul>
+</section>
+
+<!-- SLIDE 113: CHECKLIST PROYECTO -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">✅ Checklist Proyecto Real</h2>
+  <ul class="text-base" style="color: #cbd5e1;">
+    <li>☑️ Estructura de carpetas clara y escalable</li>
+    <li>☑️ Lazy loading configurado</li>
+    <li>☑️ Interceptors para auth y errores</li>
+    <li>☑️ Guards en rutas protegidas</li>
+    <li>☑️ Environment configs (dev/prod)</li>
+  </ul>
+</section>
+
+<!-- SLIDE 114: ERRORES A EVITAR -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">⚠️ Errores Comunes Avanzados</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Memory leaks por subscripciones sin cleanup</li>
+    <li>No usar trackBy en listas grandes</li>
+    <li>Lógica de negocio en componentes</li>
+    <li>No optimizar detección de cambios</li>
+  </ul>
+</section>
+
+<!-- SLIDE 115: DEBUGGING AVANZADO -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">🐛 Debugging Avanzado</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Chrome DevTools con Source Maps</li>
+    <li>Angular DevTools para profiling</li>
+    <li>RxJS tap() para debugging observables</li>
+    <li>console.trace() para call stacks</li>
+  </ul>
+</section>
+
+<!-- SLIDE 116: CÓDIGO LIMPIO -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">🧹 Principios Código Limpio</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Single Responsibility Principle</li>
+    <li>Nombres descriptivos y consistentes</li>
+    <li>Funciones pequeñas y enfocadas</li>
+    <li>Comentarios solo cuando sea necesario</li>
+  </ul>
+</section>
+
+<!-- SLIDE 117: SOLID EN ANGULAR -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">SOLID en Angular</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li><strong>S:</strong> Un componente, una responsabilidad</li>
+    <li><strong>O:</strong> Extensible sin modificar (herencia)</li>
+    <li><strong>L:</strong> Interfaces y abstracciones</li>
+    <li><strong>I:</strong> Interfaces específicas, no genéricas</li>
+    <li><strong>D:</strong> Inyección de dependencias</li>
+  </ul>
+</section>
+
+<!-- SLIDE 118: PATRONES DE DISEÑO -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">Patrones de Diseño Comunes</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>Singleton (servicios providedIn root)</li>
+    <li>Observer (RxJS Observables)</li>
+    <li>Decorator (@Component, @Injectable)</li>
+    <li>Factory (Dynamic components)</li>
+  </ul>
+</section>
+
+<!-- SLIDE 119: REPASO FINAL -->
+<section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+  <h2 class="mb-6" style="color: #38bdf8;">🎯 Repaso: Conceptos Clave</h2>
+  <ul class="text-lg" style="color: #cbd5e1;">
+    <li>✅ Standalone components siempre</li>
+    <li>✅ Signals para reactividad</li>
+    <li>✅ Control flow moderno (@if, @for)</li>
+    <li>✅ Routing + HTTP + Formularios</li>
+  </ul>
+</section>
+
+<!-- SLIDE 120: GRACIAS -->
+<section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+  <h1 class="text-6xl mb-6" style="color: #38bdf8;">¡Gracias!</h1>
+  <p class="text-2xl mb-4" style="color: #cbd5e1;">¿Preguntas?</p>
+  <p class="text-lg mb-6" style="color: #94a3b8;">¡Ahora a practicar! 💪</p>
+  <p class="text-base" style="color: #64748b;">Angular 20/21 - De Cero a Pro • 2026</p>
+</section>
+
+</body>
+</html>
+
